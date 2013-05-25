@@ -1,0 +1,135 @@
+﻿{
+	"toJSON": true,
+	"dbInfo": [
+		{
+			"name": "Model",
+			"uuid": "20202020202020202020202020202020"
+		}
+	],
+	"extraProperties": {
+		"version": "1",
+		"classes": {
+			"Person": {
+				"panelColor": "#C3D69B",
+				"panel": {
+					"isOpen": "true",
+					"position": {
+						"X": 25,
+						"Y": 20
+					},
+					"pathVisible": true
+				}
+			},
+			"User": {
+				"panelColor": "#8DB3E2",
+				"panel": {
+					"isOpen": "true",
+					"position": {
+						"X": 339,
+						"Y": 23
+					},
+					"pathVisible": true
+				}
+			}
+		},
+		"model": {
+			"workspaceLeft": 0,
+			"workspaceTop": 0
+		}
+	},
+	"dataClasses": [
+		{
+			"collectionName": "PersonCollection",
+			"className": "Person",
+			"attributes": [
+				{
+					"name": "ID",
+					"kind": "storage",
+					"type": "long",
+					"autosequence": "true",
+					"unique": "true",
+					"primKey": "true"
+				},
+				{
+					"name": "firstName",
+					"scope": "public",
+					"type": "string",
+					"kind": "storage"
+				},
+				{
+					"name": "lastName",
+					"scope": "public",
+					"type": "string",
+					"kind": "storage"
+				},
+				{
+					"name": "userCollection",
+					"scope": "public",
+					"reversePath": true,
+					"path": "userPerson",
+					"type": "UserCollection",
+					"kind": "relatedEntities"
+				}
+			]
+		},
+		{
+			"collectionName": "UserCollection",
+			"className": "User",
+			"attributes": [
+				{
+					"name": "ID",
+					"kind": "storage",
+					"type": "uuid",
+					"primKey": "true",
+					"autosequence": true,
+					"unique": true
+				},
+				{
+					"name": "userName",
+					"scope": "public",
+					"type": "string",
+					"kind": "storage"
+				},
+				{
+					"name": "password",
+					"scope": "public",
+					"type": "string",
+					"kind": "calculated",
+					"scriptKind": "javascript",
+					"onSet": [
+						{
+							"from": "guidedModel.User.password.onSet"
+						}
+					],
+					"onGet": [
+						{
+							"from": "guidedModel.User.password.onGet"
+						}
+					]
+				},
+				{
+					"name": "HA1key",
+					"scope": "public",
+					"type": "string",
+					"kind": "storage"
+				},
+				{
+					"name": "userPerson",
+					"scope": "public",
+					"path": "Person",
+					"type": "Person",
+					"kind": "relatedEntity"
+				}
+			],
+			"methods": [
+				{
+					"name": "validatePassword",
+					"applyTo": "entity",
+					"from": "guidedModel.User.entityMethods.validatePassword",
+					"scope": "publicOnServer"
+				}
+			]
+		}
+	],
+	"type": []
+}
